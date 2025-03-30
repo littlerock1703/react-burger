@@ -1,0 +1,22 @@
+.name {
+  composes: text text_type_main-default from global;
+  min-height: 48px;
+}
+
+.ingredient {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  flex: 0 0 calc(50% - var(--ingredients-gap, 24px) / 2);
+  position: relative;
+  max-width: 240px;
+  cursor: pointer;
+}
+
+.price {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
