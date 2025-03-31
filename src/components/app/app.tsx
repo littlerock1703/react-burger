@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
-import { AppHeader } from './components/app-header/app-header'
-import { BurgerConstructor } from './components/burger-constructor/burger-constructor'
-import { BurgerIngredients } from './components/burger-ingredients/burger-ingredients'
+import { AppHeader } from '../app-header/app-header'
+import { BurgerConstructor } from '../burger-constructor/burger-constructor'
+import { BurgerIngredients } from '../burger-ingredients/burger-ingredients'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
-import { ingredientsData } from './utils/data'
-import IBurgerIngredient from './utils/custom'
+import { ingredientsData } from '../../utils/data'
+import IBurgerIngredient from '../../utils/custom'
 import style from './app.module.scss'
 
 
