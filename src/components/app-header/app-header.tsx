@@ -10,7 +10,7 @@ return (
     <ul className={style.menu}>
       <ul className={style.menu}>
         <li>
-          <a href="#main" className={style.link}>
+          <a href="#main" className={`${style.link} ${style.active}`}>
           <BurgerIcon type='primary' />
           <span>Конструктор</span>
           </a>
