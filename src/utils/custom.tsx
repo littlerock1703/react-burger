@@ -1,4 +1,4 @@
-interface IBurgerIngredient {
+export interface IBurgerIngredient {
   _id: string;
   name: string;
   type: string;
@@ -13,4 +13,29 @@ interface IBurgerIngredient {
   __v: number;
 }
 
-export default IBurgerIngredient;
+export interface IResponseSuccess {
+  success: boolean
+  message?: string
+}
+
+export interface IIngredientsResponse extends IResponseSuccess {
+  data: IBurgerIngredient[]
+}
+
+export interface IConstructorBurgerIngredient extends IBurgerIngredient {
+  uuid: string
+}
+
+export interface IOrderState {
+  bun: IConstructorBurgerIngredient | null
+  ingredients: IConstructorBurgerIngredient[]
+  orderNumber: number | null
+  orderCreateRequest: boolean
+  orderCreateFailed: string | null
+}
+
+export interface IIngredientsState {
+  ingredients: IBurgerIngredient[] | []
+  ingredientsFailed: null | string
+  ingredientsRequest: boolean
+}

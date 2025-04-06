@@ -1,0 +1,14 @@
+.element {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: end;
+}
+
+.dragCursor {
+  cursor: grab;
+}
+
+.drag {
+  width: 24px;
+}

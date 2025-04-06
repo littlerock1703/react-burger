@@ -1,87 +1,104 @@
+import { useMemo, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useDrop } from 'react-dnd'
 import {
   CurrencyIcon,
-  DragIcon,
-  Button,
-  ConstructorElement,
+  Button
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useState } from 'react'
 
 import { Modal } from '../modal/modal'
-import IBurgerIngredient from '../../utils/custom'
+import { IBurgerIngredient } from '../../utils/custom'
 import style from './burger-constructor.module.scss'
 import { OrderDetails } from './order-details/order-details'
+import { createOrder } from '../../services/actions/burger-constructor'
+import { setBun, addIngredient, cleanOrder } from '../../services/reducers/burger-constructor'
+import { OrderElement } from './order-element/order-element'
 
 
-interface IBurgerConstructorProps {
-  ingredients: IBurgerIngredient[]
-}
+export const BurgerConstructor = () => {
 
-export const BurgerConstructor = ({ ingredients }: IBurgerConstructorProps) => {
+  const dispatch = useDispatch()
+  const { bun, ingredients } = useSelector(state => state.order)
 
   const [visibilityOrder, setVisibilityOrder] = useState(false)
-  let bun = null
-  const filling = []
 
-  for (const ingredient of ingredients) {
-    if (ingredient.type === 'bun') {
-      bun = ingredient
+  const countTotalPrice = useMemo(() => {
+    const totalPrice = ingredients.reduce((acc, ingredient) => acc + ingredient?.price, 0) + (bun ? bun.price * 2 : 0)
+    return totalPrice
+  }, [ingredients, bun])
+
+  const handleModalWinOpen = () => {
+    dispatch(createOrder())
+    setVisibilityOrder(true)
+  }
+
+  const handleModalWinClose = () => {
+    dispatch(cleanOrder())
+    setVisibilityOrder(false)
+  }
+
+  const handleDrop = (ingredient: IBurgerIngredient) => {
+    if (ingredient.type === 'main' || ingredient.type === 'sauce' ) {
+      dispatch(addIngredient(ingredient))
     } else {
-      filling.push(ingredient)
+      dispatch(setBun(ingredient))
     }
   }
 
+  const [_, drop] = useDrop({
+    accept: 'ingredient',
+    drop: handleDrop,
+  })
+
   return (
-    <section className={style.burgerConstructor}>
-      <div className={style.burgerConstructor__block}>
+    <section className={style.burgerConstructor } ref={drop}>
+      <ul className={`${style.burgerConstructor__block} ${(bun === null && ingredients.length < 1) && style.empty}`}>
         {bun !== null && (
-          <div className={style.bun}>
-            <ConstructorElement
-              type="top"
-              isLocked={true}
-              text={`${bun.name} (верх)`}
-              price={bun.price}
-              thumbnail={bun.image}
-            />
-          </div>
+          <OrderElement
+            type="top"
+            text={`${bun.name} (верх)`}
+            isLocked={true}
+            thumbnail={bun.image}
+            price={bun.price}
+          />
         )}
-        <div className={style.composition}>
+        <li className={style.composition}>
           <ul className={style.composition__list}>
-            {filling.map(ingredient => (
-              <li key={ingredient._id} className={style.ingredient}>
-                <DragIcon type="primary" />
-                <ConstructorElement
-                  text={ingredient.name}
-                  price={ingredient.price}
-                  thumbnail={ingredient.image}
-                />
-              </li>
+            {ingredients.map((ingredient, index)  => (
+              <OrderElement
+                index={index}
+                key={ingredient.uuid}
+                isLocked={false}
+                uuid={ingredient.uuid}
+                text={ingredient.name}
+                thumbnail={ingredient.image}
+                price={ingredient.price}
+              />
             ))}
           </ul>
-        </div>
+        </li>
         {bun !== null && (
-          <div className={style.bun}>
-            <ConstructorElement
-              type="bottom"
-              isLocked={true}
-              text={`${bun.name} (низ)`}
-              price={bun.price}
-              thumbnail={bun.image}
-            />
-          </div>
+          <OrderElement
+            type="bottom"
+            text={`${bun.name} (низ)`}
+            isLocked={true}
+            thumbnail={bun.image}
+            price={bun.price}
+          />
         )}
-      </div>
+      </ul>
       <div className={style.burgerConstructor__info}>
         <div className={style.price}>
-          <span className="text text_type_digits-medium">610</span>
+          <span className="text text_type_digits-medium">{countTotalPrice}</span>
           <CurrencyIcon type="primary" />
         </div>
-        <Button htmlType="button" type="primary" size="large" onClick={() => setVisibilityOrder(true)}>
+        <Button htmlType="button" type="primary" size="large" onClick={handleModalWinOpen}>
           Оформить заказ
         </Button>
       </div>
 
       {visibilityOrder && (
-        <Modal onClose={() => setVisibilityOrder(false)}>
+        <Modal onClose={handleModalWinClose}>
           <OrderDetails />
         </Modal>
       )}
