@@ -34,6 +34,11 @@ export interface IOrderState {
   orderCreateFailed: string | null
 }
 
+export interface IOrderNumberResponse extends IResponseSuccess {
+  name: string
+  order: {number: number}
+}
+
 export interface IIngredientsState {
   ingredients: IBurgerIngredient[] | []
   ingredientsFailed: null | string

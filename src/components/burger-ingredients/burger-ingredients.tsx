@@ -1,16 +1,17 @@
 import { useRef, RefObject, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import { IngredientItem } from './ingredient-item/ingredient-item'
 import { IngredientDetails } from './ingredient-details/ingredient-details'
 import { Modal } from '../modal/modal'
 import style from './burger-ingredients.module.scss'
 import { IBurgerIngredient } from '../../utils/custom'
+import { selectIngredients } from '../../services/reducers/burger-ingredients'
 
-interface IBurgerIngredientsProps {
-  ingredients: IBurgerIngredient[]
-}
 
-export const BurgerIngredients = ({ ingredients }: IBurgerIngredientsProps) => {
+export const BurgerIngredients = () => {
+  const { ingredients } = useSelector(selectIngredients)
+
   const [currentTab, setCurrentTab] = useState('buns')
   const [currentIngredient, setCurrentIngredient] =
     useState<IBurgerIngredient | null>(null)

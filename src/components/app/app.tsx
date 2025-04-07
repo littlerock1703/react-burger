@@ -12,7 +12,7 @@ import { selectIngredients } from '../../services/reducers/burger-ingredients'
 
 function App() {
   const dispatch = useDispatch()
-  const { ingredientsRequest, ingredientsFailed, ingredients } = useSelector(selectIngredients)
+  const { ingredientsRequest, ingredientsFailed } = useSelector(selectIngredients)
 
   useEffect(() => {
     dispatch(getIngredients())
@@ -29,7 +29,7 @@ function App() {
       </main>}
       {!ingredientsRequest && !ingredientsFailed && (
         <main className={style.content}>
-          <BurgerIngredients ingredients={ingredients} />
+          <BurgerIngredients />
           <BurgerConstructor />
         </main>
       )} 

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { endpoints } from '../../utils/api'
-import type { IOrderState } from '../../utils/custom'
+import { endpoints, request } from '../../utils/api'
+import type { IOrderState, IOrderNumberResponse } from '../../utils/custom'
 
 export const createOrder = createAsyncThunk(
   'burgerConstructor/createOrder',
@@ -8,15 +8,13 @@ export const createOrder = createAsyncThunk(
     const { order: { bun, ingredients } } = getState() as { order: IOrderState }
     const ids = bun ? [bun._id, ...ingredients.map(i => i._id), bun._id] : ingredients.map(i => i._id)
 
-    const response = await fetch(endpoints.orders, {
+    const options: RequestInit = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ ingredients: ids }),
-    })
+    }
 
-    if (!response.ok) throw new Error(`Ошибка ${response.status}`)
-    const data = await response.json()
-    if (!data.success) throw new Error(data.message || 'Ошибка запроса')
+    const data = await request<IOrderNumberResponse>(endpoints.orders, options)
 
     return data.order.number
   }
