@@ -1,5 +1,6 @@
 import { useRef, RefObject, useState } from 'react'
 import { useSelector } from 'react-redux'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import { IngredientItem } from './ingredient-item/ingredient-item'
 import { IngredientDetails } from './ingredient-details/ingredient-details'
@@ -13,13 +14,20 @@ export const BurgerIngredients = () => {
   const { ingredients } = useSelector(selectIngredients)
 
   const [currentTab, setCurrentTab] = useState('buns')
-  const [currentIngredient, setCurrentIngredient] =
-    useState<IBurgerIngredient | null>(null)
+  // const [currentIngredient, setCurrentIngredient] =
+  //   useState<IBurgerIngredient | null>(null)
 
   const bunsRef = useRef<HTMLDivElement>(null)
   const mainRef = useRef<HTMLDivElement>(null)
   const sauceRef = useRef<HTMLDivElement>(null)
   const viewRef = useRef<HTMLDivElement>(null)
+
+  const location = useLocation()
+  const navigate = useNavigate()
+
+  const handleIngredientClick = (ingredient: IBurgerIngredient) => {
+    navigate(`/ingredients/${ingredient._id}`, {state: { background: location }})
+  }
 
   const categories = [
     { type: 'bun', title: 'Булки', tabRef: bunsRef},
@@ -27,6 +35,7 @@ export const BurgerIngredients = () => {
     { type: 'main', title: 'Начинки', tabRef: mainRef }
   ]
 
+  
   const scrollToCategory = (refObj: RefObject<HTMLDivElement>) => {
     if (refObj && refObj.current) {
       refObj.current.scrollIntoView({behavior: 'smooth', block: 'start'})
@@ -89,7 +98,7 @@ export const BurgerIngredients = () => {
                   <IngredientItem
                     key={item._id}
                     ingredient={item}
-                    onClick={() => setCurrentIngredient(item)}
+                    onClick={() => handleIngredientClick(item)}
                   />
                 ))}
               </ul>
@@ -97,12 +106,6 @@ export const BurgerIngredients = () => {
           ))}
         </div>
       </section>
-
-      {currentIngredient && (
-        <Modal title="Детали ингредиента" onClose={() => setCurrentIngredient(null)}>
-          <IngredientDetails ingredient={currentIngredient} />
-        </Modal>
-      )}
     </section>
   )
 }

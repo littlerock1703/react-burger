@@ -44,3 +44,29 @@ export interface IIngredientsState {
   ingredientsFailed: null | string
   ingredientsRequest: boolean
 }
+
+export interface IFormData {
+  [key: string]: string
+}
+
+export interface IFormDataReturn {
+  value: IFormData
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  setValue: React.Dispatch<React.SetStateAction<IFormData>>
+}
+
+export interface IUser {
+  name: string
+  email: string
+  password?: string
+}
+
+export interface IRefreshTokenResponse extends IResponseSuccess {
+  accessToken: string
+  refreshToken: string
+}
+
+
+export interface IUserResponse extends IRefreshTokenResponse {
+  user: IUser
+}
