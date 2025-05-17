@@ -1,52 +1,36 @@
 import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+
 import { AppHeader } from '../app-header/app-header'
 import { BurgerConstructor } from '../burger-constructor/burger-constructor'
 import { BurgerIngredients } from '../burger-ingredients/burger-ingredients'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
-import { ingredientsData } from '../../utils/data'
-import IBurgerIngredient from '../../utils/custom'
+import { getIngredients } from '../../services/actions/burger-ingredients'
 import style from './app.module.scss'
-
-
-const INGREDIENTS_URL = 'https://norma.nomoreparties.space/api/ingredients'
+import { selectIngredients } from '../../services/reducers/burger-ingredients'
 
 function App() {
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(false)
-
-  const [burgerComposition, setBurgerComposition] = useState<IBurgerIngredient[]>([])
-  const [ingredients, setIngredients] = useState<IBurgerIngredient[]>([])
+  const dispatch = useDispatch()
+  const { ingredientsRequest, ingredientsFailed } = useSelector(selectIngredients)
 
   useEffect(() => {
-    const fetchIngredients = async () => {
-      try {
-        const res = await fetch(INGREDIENTS_URL);
-        if (!res.ok) throw new Error(`Error ${res.status}`);
-        
-        const { success, data } = await res.json();
-        if (!success) throw new Error(`Error ${data}`);
-        
-        setIngredients(data);
-        setBurgerComposition(data);
-      } catch (error) {
-        console.error('Error', error.message);
-        setError(true);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchIngredients();
-  }, []);
+    dispatch(getIngredients())
+  }, [dispatch]);
 
   return (
     <>
       <AppHeader />
-      {!loading && !error && (
+      {ingredientsRequest && <main className={style.content}>
+        <p className={style.preload}>Загрузка...</p>
+      </main>}
+      {ingredientsFailed && <main className={style.content}>
+        <p className={style.preload}>Что-то пошло не так</p>
+      </main>}
+      {!ingredientsRequest && !ingredientsFailed && (
         <main className={style.content}>
-          <BurgerIngredients ingredients={ingredients} />
-          <BurgerConstructor ingredients={burgerComposition} />
+          <BurgerIngredients />
+          <BurgerConstructor />
         </main>
       )} 
     </>

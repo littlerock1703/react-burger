@@ -9,3 +9,8 @@
   padding-inline: 20px;
   margin-inline: auto;
 }
+
+.preload {
+  composes: text text_type_main-default from global;
+  margin: auto;
+}

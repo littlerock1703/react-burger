@@ -1,25 +1,59 @@
-import { useState } from 'react'
+import { useRef, RefObject, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import { IngredientItem } from './ingredient-item/ingredient-item'
 import { IngredientDetails } from './ingredient-details/ingredient-details'
 import { Modal } from '../modal/modal'
 import style from './burger-ingredients.module.scss'
-import IBurgerIngredient from '../../utils/custom'
+import { IBurgerIngredient } from '../../utils/custom'
+import { selectIngredients } from '../../services/reducers/burger-ingredients'
 
-interface IBurgerIngredientsProps {
-  ingredients: IBurgerIngredient[]
-}
 
-export const BurgerIngredients = ({ ingredients }: IBurgerIngredientsProps) => {
+export const BurgerIngredients = () => {
+  const { ingredients } = useSelector(selectIngredients)
+
   const [currentTab, setCurrentTab] = useState('buns')
   const [currentIngredient, setCurrentIngredient] =
     useState<IBurgerIngredient | null>(null)
 
+  const bunsRef = useRef<HTMLDivElement>(null)
+  const mainRef = useRef<HTMLDivElement>(null)
+  const sauceRef = useRef<HTMLDivElement>(null)
+  const viewRef = useRef<HTMLDivElement>(null)
+
   const categories = [
-    { type: 'bun', title: 'Булки', count: 3 },
-    { type: 'sauce', title: 'Соусы', count: 0 },
-    { type: 'main', title: 'Начинки', count: 1 },
+    { type: 'bun', title: 'Булки', tabRef: bunsRef},
+    { type: 'sauce', title: 'Соусы', tabRef: sauceRef },
+    { type: 'main', title: 'Начинки', tabRef: mainRef }
   ]
+
+  const scrollToCategory = (refObj: RefObject<HTMLDivElement>) => {
+    if (refObj && refObj.current) {
+      refObj.current.scrollIntoView({behavior: 'smooth', block: 'start'})
+    }
+  }
+
+  const handleScroll = () => {
+    if (bunsRef.current && mainRef.current && sauceRef.current && viewRef.current) {
+      const viewBlock = viewRef.current.getBoundingClientRect()
+      const tabsBlock: [string, DOMRect][] = [
+        ['bun', bunsRef.current.getBoundingClientRect()],
+        ['sauce', sauceRef.current.getBoundingClientRect()],
+        ['main', mainRef.current.getBoundingClientRect()]
+      ]
+
+      let minBlock = tabsBlock.pop()
+      if (!minBlock) return
+
+      for (const block of tabsBlock) {
+        const currBlock = Math.round(block[1].y + block[1].height - viewBlock.y)
+        const prevBlock = Math.round(minBlock[1].y + minBlock[1].height - viewBlock.y)
+        if (currBlock > 0 && prevBlock > currBlock) minBlock = block
+      }
+      minBlock && setCurrentTab(minBlock[0])
+    }
+  }
+
 
   const filteredItems = (type: string) =>
     ingredients.filter(item => item.type === type)
@@ -29,12 +63,15 @@ export const BurgerIngredients = ({ ingredients }: IBurgerIngredientsProps) => {
       <header className={style.header}>
         <h1 className={style.title}>Соберите бургер</h1>
         <nav className={style.tabs}>
-          {categories.map(({ type, title }) => (
+          {categories.map(({ type, title, tabRef }) => (
             <Tab
               key={type}
               value={type}
               active={currentTab === type}
-              onClick={setCurrentTab}
+              onClick={() => {
+                setCurrentTab(type)
+                scrollToCategory(tabRef)
+              }}
             >
               {title}
             </Tab>
@@ -43,9 +80,9 @@ export const BurgerIngredients = ({ ingredients }: IBurgerIngredientsProps) => {
       </header>
 
       <section className={style.categories}>
-        <div className={style.views}>
-          {categories.map(({ type, title, count }) => (
-            <article key={type} className={style.category}>
+        <div className={style.views} ref={viewRef} onScroll={handleScroll}>
+          {categories.map(({ type, title, tabRef }) => (
+            <article key={type} ref={tabRef} className={style.category}>
               <h2 className={style.category__title}>{title}</h2>
               <ul className={style.list}>
                 {filteredItems(type).map(item => (
@@ -53,7 +90,6 @@ export const BurgerIngredients = ({ ingredients }: IBurgerIngredientsProps) => {
                     key={item._id}
                     ingredient={item}
                     onClick={() => setCurrentIngredient(item)}
-                    count={count}
                   />
                 ))}
               </ul>
