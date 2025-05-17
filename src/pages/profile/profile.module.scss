@@ -1,0 +1,45 @@
+.profile {
+  composes: container from global;
+
+  display: grid;
+  grid-template-columns: 320px 480px;
+  gap: 60px;
+  padding: 120px 0 0 0;
+
+  &__sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+  }
+}
+
+.sidebar {
+
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+
+  &__link {
+    composes: text text_type_main-medium text_color_inactive from global;
+
+    min-height: 64px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+    text-decoration: none;
+
+    transition: var(--common-transition);
+
+    &:hover,
+    &.active {
+      color: var(--text-primary-light);
+    }
+  }
+
+  &__footnote {
+    composes: text text_type_main-small text_color_inactive from global;
+
+    opacity: .4;
+  }
+}

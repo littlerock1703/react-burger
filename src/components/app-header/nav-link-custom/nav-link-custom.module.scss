@@ -1,0 +1,18 @@
+.link {
+  composes: text_type_main-default text_color_inactive from global;
+
+  display: flex;
+  align-items: center;
+
+  padding: 16px 20px;
+  gap: 8px;
+
+  text-decoration: none;
+
+  transition: var(--common-transition);
+
+  &:hover,
+  &.active {
+    color: var(--text-primary-light);
+  }
+}
