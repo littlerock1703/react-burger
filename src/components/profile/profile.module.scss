@@ -1,0 +1,11 @@
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.profile {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 24px;
+}

@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { useDrop } from 'react-dnd'
 import {
   CurrencyIcon,
@@ -19,8 +20,10 @@ export const BurgerConstructor = () => {
 
   const dispatch = useDispatch()
   const { bun, ingredients } = useSelector(state => state.order)
+  const { user } = useSelector(state => state.user)
 
   const [visibilityOrder, setVisibilityOrder] = useState(false)
+  const navigate = useNavigate()
 
   const countTotalPrice = useMemo(() => {
     const totalPrice = ingredients.reduce((acc, ingredient) => acc + ingredient?.price, 0) + (bun ? bun.price * 2 : 0)
@@ -28,8 +31,13 @@ export const BurgerConstructor = () => {
   }, [ingredients, bun])
 
   const handleModalWinOpen = () => {
-    dispatch(createOrder())
-    setVisibilityOrder(true)
+    if (!user) {
+      navigate('/login')
+    }
+    else {
+      dispatch(createOrder())
+      setVisibilityOrder(true)
+    }
   }
 
   const handleModalWinClose = () => {
@@ -92,7 +100,7 @@ export const BurgerConstructor = () => {
           <span className="text text_type_digits-medium">{countTotalPrice}</span>
           <CurrencyIcon type="primary" />
         </div>
-        <Button htmlType="button" type="primary" size="large" onClick={handleModalWinOpen}>
+        <Button htmlType="button" type="primary" size="large" disabled={!bun && ingredients.length === 0} onClick={handleModalWinOpen}>
           Оформить заказ
         </Button>
       </div>
