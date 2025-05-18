@@ -10,7 +10,7 @@ interface IModalProps {
   title?: string
 }
 
-export const Modal = ({ children, onClose, title }: IModalProps) => {
+export const Modal = ({ children, onClose, title }: IModalProps): React.JSX.Element => {
   const modals = document.getElementById('modals') as HTMLElement
 
   useEscapeKey(onClose)

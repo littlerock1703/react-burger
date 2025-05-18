@@ -4,7 +4,7 @@ import style from './profile.module.scss'
 import { useDispatch } from 'react-redux'
 import { logout } from '../../services/actions/user'
 
-export const ProfilePage = () => {
+export const ProfilePage = (): React.JSX.Element => {
   const dispatch = useDispatch()
 
   const handleLogout = () => {

@@ -10,7 +10,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { register } from '../../services/actions/user'
 
-export const Register = () => {
+export const Register = (): React.JSX.Element => {
   const [nameFieldContent, setNameFieldContent] = useState('')
   const [emailFieldContent, setEmailFieldContent] = useState('')
   const [passwordFieldContent, setPasswordFieldContent] = useState('')

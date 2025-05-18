@@ -7,7 +7,7 @@ import {
 import { useEffect, useState } from 'react'
 import { resetPassword } from '../../utils/api'
 
-export const ForgotPassword = () => {
+export const ForgotPassword = (): React.JSX.Element => {
   const navigate = useNavigate()
 
   const [emailFieldContent, setEmailFieldContent] = useState('')

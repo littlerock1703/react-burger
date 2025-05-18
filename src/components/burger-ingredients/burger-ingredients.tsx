@@ -9,11 +9,18 @@ import style from './burger-ingredients.module.scss'
 import { IBurgerIngredient } from '../../utils/custom'
 import { selectIngredients } from '../../services/reducers/burger-ingredients'
 
+enum CategoriesTabs {
+  bun='bun',
+  main='main',
+  sauce='sauce'
+}
+
+type TCategoriesTabs = keyof typeof CategoriesTabs
 
 export const BurgerIngredients = () => {
   const { ingredients } = useSelector(selectIngredients)
 
-  const [currentTab, setCurrentTab] = useState('buns')
+  const [currentTab, setCurrentTab] = useState<TCategoriesTabs>('bun')
   // const [currentIngredient, setCurrentIngredient] =
   //   useState<IBurgerIngredient | null>(null)
 
@@ -30,9 +37,9 @@ export const BurgerIngredients = () => {
   }
 
   const categories = [
-    { type: 'bun', title: 'Булки', tabRef: bunsRef},
-    { type: 'sauce', title: 'Соусы', tabRef: sauceRef },
-    { type: 'main', title: 'Начинки', tabRef: mainRef }
+    { type: CategoriesTabs.bun, title: 'Булки', tabRef: bunsRef},
+    { type: CategoriesTabs.sauce, title: 'Соусы', tabRef: sauceRef },
+    { type: CategoriesTabs.main, title: 'Начинки', tabRef: mainRef }
   ]
 
   
@@ -45,10 +52,10 @@ export const BurgerIngredients = () => {
   const handleScroll = () => {
     if (bunsRef.current && mainRef.current && sauceRef.current && viewRef.current) {
       const viewBlock = viewRef.current.getBoundingClientRect()
-      const tabsBlock: [string, DOMRect][] = [
-        ['bun', bunsRef.current.getBoundingClientRect()],
-        ['sauce', sauceRef.current.getBoundingClientRect()],
-        ['main', mainRef.current.getBoundingClientRect()]
+      const tabsBlock: [CategoriesTabs, DOMRect][] = [
+        [CategoriesTabs.bun, bunsRef.current.getBoundingClientRect()],
+        [CategoriesTabs.sauce, sauceRef.current.getBoundingClientRect()],
+        [CategoriesTabs.main, mainRef.current.getBoundingClientRect()]
       ]
 
       let minBlock = tabsBlock.pop()
