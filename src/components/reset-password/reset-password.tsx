@@ -8,7 +8,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { updatePassword } from '../../utils/api'
 
-export const ResetPassword = () => {
+export const ResetPassword = (): React.JSX.Element => {
   const [newPasswordFieldContent, setNewPasswordFieldContent] = useState('')
   const [confirmCodeFieldContent, setConfirmCodeFieldContent] = useState('')
   const [loading, setLoading] = useState(false)

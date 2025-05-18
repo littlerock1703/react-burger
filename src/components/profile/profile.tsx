@@ -11,7 +11,7 @@ import { getUser } from '../../services/reducers/user'
 import { patchUser } from '../../services/actions/user'
 import style from './profile.module.scss'
 
-export const Profile = () => {
+export const Profile = (): React.JSX.Element => {
   const user = useSelector(getUser)
   const [nameFieldContent, setNameFieldContent] = useState(user?.name || '')
   const [passwordFieldContent, setPasswordFieldContent] = useState('')
