@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch } from '../../services/reducers/index'
 import style from './login.module.scss'
 import {
   EmailInput,

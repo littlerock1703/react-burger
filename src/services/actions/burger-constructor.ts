@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { endpoints, request } from '../../utils/api'
-import type { IOrderState, IOrderNumberResponse } from '../../utils/custom'
+import type { IOrderState, IOrderRequest, IOrderNumberResponse } from '../../utils/custom'
 
 export const createOrder = createAsyncThunk(
   'burgerConstructor/createOrder',
@@ -10,7 +10,10 @@ export const createOrder = createAsyncThunk(
 
     const options: RequestInit = {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': localStorage.getItem('accessToken') || ''
+       },
       body: JSON.stringify({ ingredients: ids }),
     }
 
@@ -18,4 +21,13 @@ export const createOrder = createAsyncThunk(
 
     return data.order.number
   }
+)
+
+export const requestOrder = createAsyncThunk(
+  'burgerConstructor/requestOrder',
+  async (orderNumber: number) => {
+    const response = await request<IOrderRequest>( `${endpoints.orders}/${orderNumber}`)
+
+    return response.orders[0] ?? null
+  },
 )

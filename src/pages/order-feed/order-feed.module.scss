@@ -1,7 +1,64 @@
-.block {
-  margin: 180px auto
+.container {
+  display: grid;
+  grid-template-columns: 608px 1fr;
+  grid-template-rows: max-content;
+  column-gap: 56px;
 }
 
-.baner{
-    composes: text text_type_digits-large mt-4 mb-8 from global;
+.header {
+  composes: text text_type_main-large from global;
+  display: flex;
+  grid-column-start: 1;
+  grid-column-end: 3;
+  margin: 40px 0 20px;
+}
+
+.ordersHistory {
+  position: relative;
+}
+
+.orders {
+  position: absolute;
+  inset: 0;
+  overflow: auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0 8px 20px 0;
+}
+
+.ordersInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+.ordersStatuses {
+  display: flex;
+  flex-direction: row;
+  gap: 80px;
+}
+
+.orderNumbers {
+  composes: text text_type_digits-default from global;
+  columns: 2;
+  column-gap: 80px;
+  list-style: none;
+  padding-top: 24px;
+
+}
+
+.title {
+  composes: text text_type_main-medium from global;
+  display: block;
+}
+
+.total {
+  composes: text text_type_digits-large from global;
+  text-shadow: 0 0 16px #3333ff40, 0 0 8px #3333ff40, 0 4px 32px #3333ff40;
+}
+
+.success {
+  color: var(--colors-interface-success);
 }

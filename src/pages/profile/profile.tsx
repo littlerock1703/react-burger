@@ -1,7 +1,7 @@
 import { Link, NavLink, Outlet } from 'react-router-dom'
 import style from './profile.module.scss'
 
-import { useDispatch } from 'react-redux'
+import { useDispatch } from '../../services/reducers/index'
 import { logout } from '../../services/actions/user'
 
 export const ProfilePage = (): React.JSX.Element => {
@@ -35,7 +35,9 @@ export const ProfilePage = (): React.JSX.Element => {
           <br /> изменить свои персональные данные
         </p>
       </nav>
-      <Outlet />
+      <div className={style.profile__content}>
+        <Outlet />
+      </div>
     </section>
   )
 }

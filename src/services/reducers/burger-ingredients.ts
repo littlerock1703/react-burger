@@ -1,9 +1,10 @@
 import { getIngredients } from '../actions/burger-ingredients'
 //import { createSelector } from 'reselect'
 import { createSlice } from '@reduxjs/toolkit'
-import { IIngredientsState } from '../../utils/custom'
+import { IIngredientWithIdState, IIngredientsState } from '../../utils/custom'
 
 export const initialState: IIngredientsState = {
+  ingredientsWithId: {},
   ingredients: [],
   ingredientsRequest: false,
   ingredientsFailed: null,
@@ -23,6 +24,13 @@ export const burgerIngredientsSlice = createSlice({
       })
       .addCase(getIngredients.fulfilled, (state, action) => {
         state.ingredients = action.payload.data
+        state.ingredientsWithId = state.ingredients.reduce(
+          (result: IIngredientWithIdState, ingredient, index) => {
+            result[ingredient._id] = state.ingredients[index]
+            return result
+          },
+          {},
+        )
         state.ingredientsRequest = false
       })
       .addCase(getIngredients.rejected, (state, action) => {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector } from '../../services/reducers/index'
 import { Navigate, useLocation } from 'react-router-dom'
 
 interface ProtectedRouteProps {

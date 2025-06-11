@@ -1,6 +1,6 @@
 import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit'
-import { createOrder } from '../actions/burger-constructor'
-import { IOrderState, IConstructorBurgerIngredient, IBurgerIngredient } from '../../utils/custom'
+import { createOrder, requestOrder } from '../actions/burger-constructor'
+import { IOrderState, IConstructorBurgerIngredient, IOrder, IBurgerIngredient } from '../../utils/custom'
 
 export const initialState: IOrderState = {
   bun: null,
@@ -8,6 +8,9 @@ export const initialState: IOrderState = {
   orderNumber: null,
   orderCreateRequest: false,
   orderCreateFailed: null,
+  orderGetRequest: false,
+  orderGetFailed: null,
+  currentOrder: null
 }
 
 export const burgerConstructorSlice = createSlice({
@@ -64,7 +67,29 @@ export const burgerConstructorSlice = createSlice({
         state.orderCreateRequest = false
         state.orderCreateFailed = action.error.message || null
       })
-  }
-})
+      .addCase(requestOrder.pending, state => {
+        state.orderGetRequest = true
+        state.orderGetFailed = null
+      })
+      .addCase(
+        requestOrder.fulfilled,
+        (state, action: PayloadAction<IOrder>) => {
+          const order = action.payload
+          if (
+            Array.isArray(order.ingredients) &&
+            order.ingredients.every(i => typeof i === 'string')
+          ) {
+            state.currentOrder = order
+          }
+          state.orderGetRequest = false
+          state.orderGetFailed = null
+        },
+      )
+      .addCase(requestOrder.rejected, (state, action) => {
+        state.orderGetRequest = false
+        state.orderGetFailed = action.error.message || null
+      })
+    }
+  })
 
 export const { setBun, addIngredient, setIngredients, removeIngredient, moveIngredient, cleanOrder } = burgerConstructorSlice.actions

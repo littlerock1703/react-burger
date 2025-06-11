@@ -1,4 +1,4 @@
-import { useDispatch } from 'react-redux'
+import { useDispatch } from '../../../services/reducers/index'
 import { useDrop, useDrag } from 'react-dnd'
 import {
     ConstructorElement,

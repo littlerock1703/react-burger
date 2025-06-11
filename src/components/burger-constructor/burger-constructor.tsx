@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from '../../services/reducers/index'
 import { useNavigate } from 'react-router-dom'
 import { useDrop } from 'react-dnd'
 import {

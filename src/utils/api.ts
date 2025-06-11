@@ -14,6 +14,13 @@ export const endpoints = {
   token: BASE_URL_API + 'auth/token',
 }
 
+const BASE_WS_API = 'wss://norma.nomoreparties.space'
+
+export const wsEndpoints = {
+  feed: BASE_WS_API + '/orders/all',
+  ordersUser: BASE_WS_API + '/orders',
+}
+
 const checkSuccess = <T extends IResponseSuccess>(res: T): Promise<T> => {
   return res.success ? Promise.resolve(res) : Promise.reject(res)
 }
@@ -90,4 +97,3 @@ export const api = {
       }
     }).then(res => res.user)
 }
-

@@ -1,0 +1,9 @@
+.stat {
+  composes: text text_type_main-default from global;
+  
+  color: var(--text-primary-color);
+
+  &_done {
+    color: var(--colors-interface-success);
+  }
+}

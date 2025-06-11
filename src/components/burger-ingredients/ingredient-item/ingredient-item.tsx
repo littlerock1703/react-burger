@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux'
+import { useSelector } from '../../../services/reducers/index'
 import { useDrag } from 'react-dnd'
 
 import {
