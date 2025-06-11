@@ -17,7 +17,7 @@ interface IngredientItemProps {
 export const IngredientItem = ({
   ingredient,
   onClick,
-}: IngredientItemProps) => {
+}: IngredientItemProps): React.JSX.Element | null => {
 
   const { bun, ingredients } = useSelector(state => state.order)
 

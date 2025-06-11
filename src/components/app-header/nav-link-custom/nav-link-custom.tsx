@@ -9,7 +9,7 @@ interface NavLinkCustomProps {
   icon: React.JSX.Element
 }
 
-export const NavLinkCustom = ({ link, text, icon }: NavLinkCustomProps) => {
+export const NavLinkCustom = ({ link, text, icon }: NavLinkCustomProps): React.JSX.Element => {
   const isRouteMatch = useMatch(link + '/*')
 
   return (

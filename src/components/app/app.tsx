@@ -20,7 +20,7 @@ import { Profile } from '../profile/profile'
 import { ProfileOrders } from '../profile/orders/orders'
 import { ProfileOrderDetails } from '../profile/order-details/order-details'
 
-function App() {
+function App(): React.JSX.Element {
   const location = useLocation()
   const navigate = useNavigate()
   const dispatch = useDispatch()

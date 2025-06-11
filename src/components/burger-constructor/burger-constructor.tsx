@@ -16,7 +16,7 @@ import { setBun, addIngredient, cleanOrder } from '../../services/reducers/burge
 import { OrderElement } from './order-element/order-element'
 
 
-export const BurgerConstructor = () => {
+export const BurgerConstructor = (): React.JSX.Element => {
 
   const dispatch = useDispatch()
   const { bun, ingredients } = useSelector(state => state.order)

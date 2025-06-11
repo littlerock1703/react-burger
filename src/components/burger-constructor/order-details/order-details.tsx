@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux'
 import iconChecked from '../../../assets/checked.svg'
 import style from './order-details.module.scss'
 
-export const OrderDetails = () => {
+export const OrderDetails = (): React.JSX.Element => {
   const { orderCreateRequest, orderNumber } = useSelector(state => state.order)
 
   return (

@@ -28,7 +28,7 @@ import {
     price,
     thumbnail,
     isLocked,
-  }: IOrderElementProps) => {
+  }: IOrderElementProps): React.JSX.Element => {
     const dispatch = useDispatch()
 
     const handleRemove = () => {!isLocked && uuid && dispatch(removeIngredient(uuid))}

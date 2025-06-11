@@ -9,7 +9,7 @@ import {
 import { useState } from 'react'
 import { login } from '../../services/actions/user'
 
-export const Login = () => {
+export const Login = (): React.JSX.Element => {
   const [emailFieldContent, setEmailFieldContent] = useState('')
   const [passwordFieldContent, setPasswordFieldContent] = useState('')
   const [loginRequest, setLoginRequest] = useState(false)
