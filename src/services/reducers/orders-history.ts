@@ -8,7 +8,7 @@ export interface IOrdersState extends IOrderResponse {
   status?: WebsocketStatus
 }
 
-const initialState: IOrdersState = {
+export const initialState: IOrdersState = {
   orders: [],
   total: undefined,
   totalToday: undefined,

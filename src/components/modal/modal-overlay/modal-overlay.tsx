@@ -5,5 +5,5 @@ interface IModalOverlayProps {
 }
 
 export const ModalOverlay = ({ onClose }: IModalOverlayProps): React.JSX.Element => (
-  <div className={style.overlay} onClick={onClose}></div>
+  <div className={style.overlay} onClick={onClose} data-testid="modal-close-overlay"></div>
 )

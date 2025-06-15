@@ -7,7 +7,7 @@ type IUserState = {
   isAuth: boolean
 }
 
-const initialState: IUserState = {
+export const initialState: IUserState = {
   user: null,
   isAuth: false,
 }

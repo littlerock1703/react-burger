@@ -21,7 +21,7 @@ export const Modal = ({ children, onClose, title }: IModalProps): React.JSX.Elem
       <div className={style.modal__body}>
         <div className={style.modal__header}>
           <h3 className={style.modal__title}>{title}</h3>
-          <button className={style.modal__close} onClick={onClose}>
+          <button className={style.modal__close} onClick={onClose} data-testid="modal-close-button">
             <CloseIcon type="primary" />
           </button>
         </div>

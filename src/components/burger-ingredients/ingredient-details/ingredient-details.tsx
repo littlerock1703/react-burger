@@ -12,7 +12,7 @@ export const IngredientDetails = (): React.JSX.Element | null => {
     !ingredient ? null : (
       <div className={style.details}>
         <div className={style.image} style={{ backgroundImage: `url(${ingredient.image_large})` }}/>
-        <span className={style.name}>{ingredient.name}</span>
+        <span className={style.name} data-testid="ingredient-details-name">{ingredient.name}</span>
         <ul className={style.nutrients}>
           {[
             { label: 'Калории, ккал', value: ingredient.calories },
