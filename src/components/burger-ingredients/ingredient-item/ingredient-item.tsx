@@ -26,7 +26,8 @@ export const IngredientItem = ({
   const [_, drag] = useDrag({type: 'ingredient', item: ingredient})
 
   return (
-    <li className={style.ingredient} ref={drag} onClick={onClick}>
+    <li className={style.ingredient} ref={drag} onClick={onClick}
+      data-testid={ingredient.type === 'bun' ? 'ingredient-bun' : 'ingredient-queue'}>
       {count > 0 && <Counter count={count} size="default" extraClass="m-1" />}
       <img src={ingredient.image} alt={ingredient.name} width="240" height="120" />
       <div className={style.price}>

@@ -59,7 +59,7 @@ export const BurgerConstructor = (): React.JSX.Element => {
   })
 
   return (
-    <section className={style.burgerConstructor } ref={drop}>
+    <section className={style.burgerConstructor } ref={drop} data-testid="constructor-drop-area">
       <ul className={`${style.burgerConstructor__block} ${(bun === null && ingredients.length < 1) && style.empty}`}>
         {bun !== null && (
           <OrderElement
@@ -100,7 +100,7 @@ export const BurgerConstructor = (): React.JSX.Element => {
           <span className="text text_type_digits-medium">{countTotalPrice}</span>
           <CurrencyIcon type="primary" />
         </div>
-        <Button htmlType="button" type="primary" size="large" disabled={!bun && ingredients.length === 0} onClick={handleModalWinOpen}>
+        <Button htmlType="button" type="primary" size="large" disabled={!bun && ingredients.length === 0} onClick={handleModalWinOpen} data-testid="constructor-place-an-order">
           Оформить заказ
         </Button>
       </div>

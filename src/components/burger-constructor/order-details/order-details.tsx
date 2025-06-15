@@ -7,7 +7,7 @@ export const OrderDetails = (): React.JSX.Element => {
 
   return (
     <div className={style.order}>
-      <p className={`${style.order__id} text text_type_digits-large mt-4 mb-8`}>
+      <p className={`${style.order__id} text text_type_digits-large mt-4 mb-8` } data-testid="order-number">
         {orderNumber}
       </p>
       <p className="text text_type_main-medium">идентификатор заказа</p>

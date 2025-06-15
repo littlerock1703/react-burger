@@ -33,6 +33,12 @@ import {
 
     const handleRemove = () => {!isLocked && uuid && dispatch(removeIngredient(uuid))}
 
+    const id_type = {
+      default: 'constructor-ingredient',
+      top: 'constructor-bun-top',
+      bottom: 'constructor-bun-bottom'
+    }[type ?? 'default']
+
     const [{ isDragging }, handleDrag] = useDrag({
       type: 'move',
       item: { index },
@@ -53,7 +59,7 @@ import {
     })
 
     return (
-      <li className={`${style.element} ${!isLocked && style.dragCursor}`} ref={node => (isLocked ? null : handleDrag(handleDrop(node)))} style={{ opacity: isDragging ? 0.5 : 1 }}>
+      <li className={`${style.element} ${!isLocked && style.dragCursor}`} ref={node => (isLocked ? null : handleDrag(handleDrop(node)))} style={{ opacity: isDragging ? 0.5 : 1 }} data-testid={id_type}>
         <div className={style.drag}>
           {!isLocked && <DragIcon type="primary" />}
         </div>

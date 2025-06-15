@@ -8,7 +8,7 @@ interface OrdersUserState {
   ordersUser: IOrder[]
 }
 
-const initialState: OrdersUserState = {
+export const initialState: OrdersUserState = {
   status: WebsocketStatus.OFFLINE,
   ordersUser: [],
 }
