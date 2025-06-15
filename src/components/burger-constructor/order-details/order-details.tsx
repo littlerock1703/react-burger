@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux'
+import { useSelector } from '../../../services/reducers/index'
 import iconChecked from '../../../assets/checked.svg'
 import style from './order-details.module.scss'
 

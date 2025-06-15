@@ -1,0 +1,41 @@
+.more {
+  composes: text text_type_main-default from global;
+
+  display: grid;
+  position: absolute;
+  background: rgb(28 28 33 / 60%);
+  place-content: center;
+  inset: 0;
+}
+
+.preview {
+  display: inline-flex;
+  position: relative;
+  list-style: none;
+}
+
+.ingredient {
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  
+  background:
+    linear-gradient(#131316, #131316) padding-box,
+    linear-gradient(45deg, #801ab2, #4c4cff) border-box;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  height: 64px;
+  width: 64px;
+
+  & > img {
+      object-fit: cover;
+      display: block;
+      height: 56px;
+      width: 100%;
+  }
+
+  &:not(:first-child) {
+      margin-inline-start: -16px;
+  }
+}

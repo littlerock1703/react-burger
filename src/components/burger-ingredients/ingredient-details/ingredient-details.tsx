@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useSelector } from '../../../services/reducers/index'
 import style from './ingredient-details.module.scss'
 
 export const IngredientDetails = (): React.JSX.Element | null => {

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch } from '../../services/reducers/index'
 import { useNavigate } from 'react-router-dom'
 import style from './register.module.scss'
 import {

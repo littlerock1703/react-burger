@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from '../../services/reducers/index'
 import { useEffect, useState } from 'react'
 import {
     Input,

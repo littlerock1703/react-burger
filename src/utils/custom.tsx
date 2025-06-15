@@ -32,6 +32,9 @@ export interface IOrderState {
   orderNumber: number | null
   orderCreateRequest: boolean
   orderCreateFailed: string | null
+  orderGetRequest: boolean
+  orderGetFailed: string | null
+  currentOrder: IOrder | null
 }
 
 export interface IOrderNumberResponse extends IResponseSuccess {
@@ -39,7 +42,12 @@ export interface IOrderNumberResponse extends IResponseSuccess {
   order: {number: number}
 }
 
+export interface IIngredientWithIdState {
+  [key: string]: IBurgerIngredient
+}
+
 export interface IIngredientsState {
+  ingredientsWithId: IIngredientWithIdState
   ingredients: IBurgerIngredient[] | []
   ingredientsFailed: null | string
   ingredientsRequest: boolean
@@ -69,4 +77,36 @@ export interface IRefreshTokenResponse extends IResponseSuccess {
 
 export interface IUserResponse extends IRefreshTokenResponse {
   user: IUser
+}
+
+export interface IOrderResponse {
+  orders: IOrder[]
+  total: number | undefined
+  totalToday: number | undefined
+}
+
+export interface IOrder {
+  _id: string
+  number: number
+  name: string
+  ingredients: string[]
+  updatedAt: string
+  createdAt: string
+  status: keyof typeof OrderStatuses
+  owner: string
+  __v: number
+}
+
+export enum WebsocketStatus {
+  CONNECTING = 'CONNECTING',
+  OFFLINE = 'OFFLINE',
+  ONLINE = 'ONLINE'
+}
+
+export interface IOrderRequest extends IOrderResponse, IResponseSuccess {}
+
+export enum OrderStatuses {
+  pending,
+  done,
+  created
 }

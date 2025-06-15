@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux'
+import { useSelector } from '../../services/reducers/index'
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { getUser } from '../../services/reducers/user'
 import { NavLinkCustom } from './nav-link-custom/nav-link-custom'
