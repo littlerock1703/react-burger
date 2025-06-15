@@ -10,7 +10,8 @@ const SELECTORS = {
   modal_close: '[data-testid="modal-close-button"]',
   drop_area: '[data-testid="constructor-drop-area"]',
   place_an_order: '[data-testid="constructor-place-an-order"]',
-  ingredient_name: '[data-testid="ingredient-details-name"]'
+  ingredient_name: '[data-testid="ingredient-details-name"]',
+  order_number: '[data-testid="order-number"]'
 } as const
 
 describe('Home page', () => {
@@ -48,7 +49,7 @@ describe('Home page', () => {
       .should('exist')
       .click()
 
-    cy.get('[data-testid="order-number"]').contains('345345').should('exist')
+    cy.get(SELECTORS.order_number).contains('345345').should('exist')
   })
 
   it('execute open and close the modal with an ingredient', () => {
